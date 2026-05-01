@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="googlebot" content="noindex,nofollow">
+<title>当日のQ&A詳細 ｜ for くぅさま</title>
+<style>
+  :root {
+    --coral: #e8825c;
+    --coral-light: #fde4cf;
+    --coral-pale: #fff8f1;
+    --navy: #2a3f6a;
+    --navy-light: #4a5f88;
+    --cream: #fdfaf3;
+    --paper: #ffffff;
+    --ink: #2c2c2c;
+    --muted: #7a7a78;
+    --line: #ece8df;
+    --green: #5fa777;
+    --gold: #c9952a;
+    --question-bg: #fff5e8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Yu Gothic", "Helvetica Neue", "Arial", sans-serif;
+    font-size: 16px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--paper);
+    box-shadow: 0 4px 40px rgba(42, 63, 106, 0.08);
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--coral-pale) 0%, #fff5e8 100%);
+    padding: 60px 56px 50px;
+    border-bottom: 4px solid var(--coral);
+  }
+  .header .badge {
+    display: inline-block;
+    background: white;
+    color: var(--coral);
+    padding: 5px 16px;
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    margin-bottom: 20px;
+    font-weight: 700;
+    border: 1.5px solid var(--coral);
+  }
+  .header h1 {
+    font-size: 30px;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .header .subtitle { color: var(--muted); font-size: 15px; }
+
+  .toc {
+    padding: 36px 56px;
+    background: var(--coral-pale);
+    border-bottom: 1px solid var(--line);
+  }
+  .toc h2 { font-size: 16px; color: var(--navy); margin-bottom: 14px; }
+  .toc-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    list-style: none;
+  }
+  .toc-list a {
+    display: block;
+    padding: 10px 16px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 14.5px;
+    transition: all 0.2s;
+  }
+  .toc-list a:hover {
+    background: var(--coral-light);
+    border-color: var(--coral);
+    color: var(--navy);
+    transform: translateX(4px);
+  }
+  .toc-list .num { color: var(--coral); font-weight: 700; margin-right: 8px; }
+
+  .qa-block {
+    padding: 50px 56px;
+    border-top: 1px solid var(--line);
+  }
+  .qa-block:nth-child(even) { background: var(--coral-pale); }
+
+  .question {
+    background: var(--question-bg);
+    border: 2px solid var(--coral);
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .question::before {
+    content: "Q";
+    position: absolute;
+    left: -12px;
+    top: -16px;
+    width: 36px;
+    height: 36px;
+    background: var(--coral);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 36px;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(232, 130, 92, 0.3);
+  }
+  .question h3 {
+    color: var(--navy);
+    font-size: 18px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .question .original {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    border-top: 1px dashed var(--coral);
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+
+  .answer { padding: 4px 4px 0 12px; border-left: 4px solid var(--green); }
+  .answer .a-label {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    padding: 3px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .answer p { margin-bottom: 14px; font-size: 15px; line-height: 1.85; }
+  .answer h4 { color: var(--navy); font-size: 15px; margin: 18px 0 8px; }
+  .answer ul { padding-left: 22px; margin-bottom: 14px; }
+  .answer li { margin-bottom: 6px; font-size: 14.5px; line-height: 1.75; }
+
+  .answer-callout {
+    background: white;
+    border-left: 4px solid var(--gold);
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 12px 0;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .answer-callout strong { color: var(--gold); }
+
+  .related-link {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 18px;
+    background: var(--navy);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .related-link:hover {
+    background: var(--coral);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(232, 130, 92, 0.3);
+  }
+  .related-link::before { content: "↗ "; }
+
+  /* 戻る */
+  .navi-back {
+    background: var(--navy);
+    color: white;
+    padding: 40px 56px;
+    text-align: center;
+  }
+  .navi-back a {
+    display: inline-block;
+    background: white;
+    color: var(--navy);
+    padding: 12px 28px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin: 4px;
+  }
+  .navi-back a:hover {
+    background: var(--coral);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(232, 130, 92, 0.3);
+  }
+  .navi-back p { color: rgba(255,255,255,0.85); margin-bottom: 16px; font-size: 14px; }
+
+  .footer {
+    text-align: center;
+    padding: 22px;
+    font-size: 11px;
+    color: var(--muted);
+    background: white;
+    border-top: 1px solid var(--line);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 720px) {
+    .header { padding: 44px 22px 36px; }
+    .header h1 { font-size: 22px; }
+    .toc { padding: 28px 22px; }
+    .qa-block { padding: 36px 22px; }
+    .navi-back { padding: 32px 22px; }
+    .question { padding: 20px 22px; }
+    .question h3 { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <span class="badge">💬 Q&A / FOR くぅさま</span>
+    <h1>当日いただいたご質問への<br>くわしいお返事</h1>
+    <p class="subtitle">「あの時もう少し聞いておきたかったな」というポイントを丁寧にまとめました</p>
+  </div>
+
+  <!-- 目次 -->
+  <div class="toc">
+    <h2>📚 このページの目次（気になったところから読んでOKです）</h2>
+    <ul class="toc-list">
+      <li><a href="#q1"><span class="num">Q1.</span>「スキル」って結局なんですか？</a></li>
+      <li><a href="#q2"><span class="num">Q2.</span>会議録（議事録）ってどうやって自動で作るんですか？</a></li>
+      <li><a href="#q3"><span class="num">Q3.</span>AIに「役割」を与えて働いてもらうって、どういうこと？</a></li>
+      <li><a href="#q4"><span class="num">Q4.</span>Claude CodeとChatGPT、両方使う必要があるの？連携できるの？</a></li>
+      <li><a href="#q5"><span class="num">Q5.</span>AIへの「指示の出し方」がよく分かりません</a></li>
+      <li><a href="#q6"><span class="num">Q6.</span>業務PCに入れられない場合は、どうしたらいい？</a></li>
+      <li><a href="#q7"><span class="num">Q7.</span>AI担当が自分一人になりそうで、ちょっと不安です</a></li>
+      <li><a href="#q8"><span class="num">Q8.</span>やりたいこといっぱいあるけど、何から始めたらいい？</a></li>
+      <li><a href="#q9"><span class="num">Q9.</span>自分のパソコンでも動くようになりますか？</a></li>
+    </ul>
+  </div>
+
+  <!-- ============ Q1 スキルって何 ============ -->
+  <div class="qa-block" id="q1">
+    <div class="question">
+      <h3>「スキル」って結局なんですか？</h3>
+      <div class="original">💬 当日のご発言：「スキルズっていうものも概念もまだはっきりわかってない状態なんですけど…」（00:59頃）</div>
+    </div>
+    <div class="answer">
+      <span class="a-label">A. ANSWER</span>
+      <p><strong>スキル＝AI（Claude Code）に「これお願いね」と言える、自分専用の作業手順書のようなもの</strong>です。</p>
+
+      <h4>イメージで言うと…</h4>
+      <p>「議事録を作る時はね、こうやって、こう書いて、ここに保存してね」っていう手順を、毎回AIに説明するのは大変ですよね。</p>
+      <p>そこで、その手順を<strong>1度だけまとめてAIに覚えさせる</strong>と、次からは「議事録作って」と一言言うだけで、AIが手順通りに動いてくれる。</p>
+      <p>この「覚えさせた手順」のことを<strong>「スキル」</strong>と呼びます。</p>
+
+      <h4>くぅさまの場合、こんなスキルが作れそうです</h4>
+      <ul>
+        <li>📝 <strong>議事録作成スキル</strong>：録音 → 文字起こし → 要約 → ファイル保存</li>
+        <li>📊 <strong>制服在庫集約スキル</strong>：50店舗のスプシ → マスターに自動転記</li>
+        <li>📅 <strong>シフト管理スキル</strong>：シフト希望集約 → 自動配置 → 通知</li>
+        <li>🏪 <strong>旦那さま用 店長業務スキル</strong>：定型作業をテンプレ化</li>
+      </ul>
+
+      <div class="answer-callout">
+        <strong>💡 スキルの作り方（お任せください）：</strong>
+        スキルを作るのは、おけもんカンパニー側の仕事です。くぅさまから「こんな手順でやってます」と教えていただければ、こちらでスキルとしてAIに登録するところまでサポートします🤝
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Q2 議事録 ============ -->
+  <div class="qa-block" id="q2">
+    <div class="question">
+      <h3>会議録（議事録）ってどうやって自動で作るんですか？</h3>
+      <div class="original">💬 当日のご発言：「ここまで録音したやつをここに入れ込んだらコピペするだけはめちゃくちゃ楽ですよね」（70分台）</div>
+    </div>
+    <div class="answer">
+      <span class="a-label">A. ANSWER</span>
+      <p>くぅさまがすでに半分体験されている通りで、ざっくり<strong>4ステップ</strong>です。</p>
+
+      <h4>会議録自動化のステップ</h4>
+      <ul>
+        <li><strong>① 録音する</strong>：ZoomやMeet会議をそのまま録音、または対面会議をスマホ・専用アプリで録音</li>
+        <li><strong>② 文字起こしする</strong>：録音ファイルをAIに渡す → 数分〜数十分で文字起こしテキストが出てくる</li>
+        <li><strong>③ AIに要約してもらう</strong>：文字起こしを「要約して」とAIに頼むと、決まった構成（議題・決定事項・次のアクション等）でまとめてくれる</li>
+        <li><strong>④ 自動でファイルに保存</strong>：作成した議事録を Googleドライブなどに自動保存</li>
+      </ul>
+
+      <h4>本日の振り返りも、実はこれで作りました</h4>
+      <p>当日Circlebackというアプリで録音 → AIで文字起こし → 要約 → このページに貼り付け、という流れで作っています。本日の振り返り資料は、まさにこの仕組みのアウトプット見本でもあります✨</p>
+
+      <div class="answer-callout">
+        <strong>📌 ご準備が必要なもの：</strong>
+        最初の1回だけ、録音アプリ・AI・保存先（Googleドライブ等）の連携設定が必要です。設定はこちらでサポートしますので、ご安心ください。
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Q3 AIの役割 ============ -->
+  <div class="qa-block" id="q3">
+    <div class="question">
+      <h3>AIに「役割」を与えて働いてもらうって、どういうこと？</h3>
+      <div class="original">💬 関連発言：「自分の範囲内で使おうとしても、でもやっぱりこの子が近くにいないと難しいですもんね」（55:00頃）</div>
+    </div>
+    <div class="answer">
+      <span class="a-label">A. ANSWER</span>
+      <p>これ、本当に面白い使い方なんです🌟</p>
+      <p>AIには<strong>「あなたは経理担当です」「あなたは営業担当です」</strong>のように、<strong>役割を与えて使う</strong>ことができるんです。</p>
+
+      <h4>例えば、おけもんカンパニーの場合</h4>
+      <p>1人のおけもん（おけちゃん）の中に、AIで作った仲間が何人もいます👇</p>
+      <ul>
+        <li>🐱 <strong>あおいCDO</strong> ＝ 技術・システムまわりの担当</li>
+        <li>💰 <strong>しーちゃんCFO</strong> ＝ 経理・お金まわりの担当</li>
+        <li>🔥 <strong>まなCSO</strong> ＝ 営業・お客様対応の担当</li>
+        <li>✨ <strong>りんCMO</strong> ＝ 発信・マーケティングの担当</li>
+        <li>🌱 <strong>ゆいCPO</strong> ＝ 商品・コーチングの担当</li>
+        <li>🎤 <strong>はるかCEO</strong> ＝ 全体まとめ役</li>
+      </ul>
+      <p>1つ1つは同じClaude Codeなんですが、それぞれに<strong>「あなたは経理担当として、こういう視点で答えてください」</strong>と役割を与えているので、まるで<strong>社員が何人もいるように使える</strong>んです。</p>
+
+      <h4>くぅさまの場合、こんな仲間が作れそうです</h4>
+      <ul>
+        <li>👔 <strong>制服在庫担当くん</strong>：50店舗の集約だけを任せる専門家</li>
+        <li>📝 <strong>議事録担当ちゃん</strong>：録音から議事録作成だけを担当</li>
+        <li>📅 <strong>シフト管理さん</strong>：シフト調整専門</li>
+        <li>🏪 <strong>店長補佐くん</strong>：旦那さま用の業務サポート</li>
+      </ul>
+      <p>必要な時に必要な担当を呼ぶ → くぅさまは<strong>「監督」</strong>の立場で全体を見られる、というイメージです🎬</p>
+
+      <div class="answer-callout">
+        <strong>💡 ポイント：</strong>
+        役割を与える＝AIに「あなたはこういう仕事をする人だよ」と伝えるだけ。プログラミングは不要です。文章で「〇〇担当として、こんな仕事をしてください」と書くだけでOK✨
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Q4 Claude vs ChatGPT ============ -->
+  <div class="qa-block" id="q4">
+    <div class="question">
+      <h3>Claude CodeとChatGPT、両方使う必要があるの？連携できるの？</h3>
+      <div class="original">💬 当日のご発言：「黒子ちゃんとチャピチャピをどうやってつなげるのみたいな…」（51:36頃）</div>
+    </div>
+    <div class="answer">
+      <span class="a-label">A. ANSWER</span>
+      <p>この使い分けはよく聞かれます！シンプルに整理すると…</p>
+
+      <h4>ざっくりの違い</h4>
+      <ul>
+        <li>🎨 <strong>ChatGPT（チャッピー）</strong>：おしゃべり・文章作成・画像生成が得意。スマホアプリで気軽に使える</li>
+        <li>💻 <strong>Claude Code（黒子ちゃん）</strong>：パソコンの中で「自動で何かをする」のが得意。スプシ操作・ファイル整理など実作業</li>
+      </ul>
+
+      <h4>両方を連携させる方法</h4>
+      <p>結論：<strong>連携できますし、必須ではありません</strong>。どちらか片方でも十分な場面が多いです。</p>
+      <p>例えば、<strong>ChatGPTで作った企画書</strong>を、<strong>Claude Codeでスプシに自動入力</strong>、みたいな連携ができます。</p>
+
+      <div class="answer-callout">
+        <strong>💡 おすすめの使い分け（くぅさまの場合）：</strong>
+        <ul style="margin: 8px 0 0 20px; padding: 0;">
+          <li>📊 制服在庫の自動集約 → Claude Code</li>
+          <li>✉️ 「店舗向けのお願い文を書いて」みたいな文章作成 → ChatGPT（スマホで気軽に）</li>
+          <li>🖼️ 社内資料用の図やイラスト → ChatGPT（画像生成）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Q5 指示の出し方 ============ -->
+  <div class="qa-block" id="q5">
+    <div class="question">
+      <h3>AIへの「指示の出し方」がよく分かりません</h3>
+      <div class="original">💬 当日のご発言：「一回やってみたんですけどやっぱりうまくいかなくて、そこでもう終わってしまって、どうやって修正をかけたらいいのか…」（40:07頃）</div>
+    </div>
+    <div class="answer">
+      <span class="a-label">A. ANSWER</span>
+      <p>これは多くの方が「最初の壁」と感じる部分です。コツは3つだけ👇</p>
+
+      <h4>コツ① 「やりたいこと」を文章で書く</h4>
+      <p>プログラミング言語は不要。<strong>普段の日本語で「こうしてほしい」を書く</strong>だけでOK。</p>
+      <p>悪い例：<code>aggregate stores</code>（英語の単語だけ）</p>
+      <p>良い例：<code>50店舗のスプレッドシートのデータを、マスターのスプシに集めて転記してください。サイズと枚数の合計が合わない場合は教えてください</code></p>
+
+      <h4>コツ② 「うまくいかなかった時」もそのまま伝える</h4>
+      <p>「さっきの方法だと、〇〇のところがうまくいかなかった。違うやり方で試してくれる？」と<strong>普通に会話する感じで伝える</strong>と、AIが別の方法を提案してくれます。</p>
+
+      <h4>コツ③ 「分からない」と素直に言ってOK</h4>
+      <p>「専門用語難しいから、もっと簡単に教えて」「初心者なので画像つきで」と書けば、AIはそれに合わせてくれます。</p>
+
+      <div class="answer-callout">
+        <strong>🤝 ご提案：</strong>
+        最初の数回は<strong>おけもんと一緒に画面共有しながら</strong>触っていただくのが一番です。コツが掴めると、3〜4回目には自分で進められるようになります✨
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Q6 業務PCに入れられない ============ -->
+  <div class="qa-block" id="q6">
+    <div class="question">
+      <h3>業務PCにClaude Codeを入れられない場合、どうしたらいい？</h3>
+      <div class="original">💬 関連トピック：会社のセキュリティ事情でPCに新しいソフトが入れられない可能性</div>
+    </div>
+    <div class="answer">
+      <span class="a-label">A. ANSWER</span>
+      <p>これは現実的によくあるご事情です。解決策が3つあります👇</p>
+
+      <h4>パターン①：個人PC・自宅PCで動かす</h4>
+      <p>自宅のパソコンや個人スマホでClaude Codeを動かして、<strong>結果（マスタースプシ）だけを業務PCで見る</strong>形。会社のPCには何もインストール不要。</p>
+
+      <h4>パターン②：社内提案で「新ツール導入」の許可をもらう</h4>
+      <p>「これだけの業務効率化が見込めます」を提案書（本日お送りしている提案書）でお見せして、<strong>正式に導入許可をもらう</strong>。社内提案にはこちらの提案書をそのまま使ってOK。</p>
+
+      <h4>パターン③：クラウドで動かす</h4>
+      <p>パソコンに何も入れず、<strong>インターネット上で動くサービス</strong>として運用する形。月額の運用費がかかりますが、業務PCに何も入れずに使えます。</p>
+
+      <div class="answer-callout">
+        <strong>💡 まずはパターン①から試すのがオススメです。</strong>
+        個人PCで動かす環境を整えれば、社内検証→効果実証→社内導入提案、という段階的な進め方ができます。
+      </div>
+      <a class="related-link" href="./google-mcp-setup.html">Claude Desktop の設定方法を見る</a>
+    </div>
+  </div>
+
+  <!-- ============ Q7 AI担当が自分一人 ============ -->
+  <div class="qa-block" id="q7">
+    <div class="question">
+      <h3>AI担当が自分一人になりそうで、ちょっと不安です</h3>
+      <div class="original">💬 当日のご発言：「会社がやっぱりAI導入とかも自分だけの領域ですることにはなるんですか」</div>
+    </div>
+    <div class="answer">
+      <span class="a-label">A. ANSWER</span>
+      <p>そのお気持ち、すごく自然です。これはくぅさま個人の問題ではなく、<strong>多くの会社で同じことが起きています</strong>。</p>
+
+      <h4>大事なのは、属人化させないこと</h4>
+      <p>「くぅさんしか分からない」状態は危険なので、おけもんカンパニーでは下記をセットでお渡しします👇</p>
+      <ul>
+        <li>📖 <strong>使い方マニュアル</strong>：誰でも見れば使える状態に</li>
+        <li>🎬 <strong>動画レッスン</strong>：必要に応じて操作を録画</li>
+        <li>👥 <strong>後輩や同僚への引き継ぎサポート</strong>：オンライン研修も可能</li>
+        <li>📞 <strong>困った時の相談窓口</strong>：おけもんカンパニーが「裏側のサポーター」</li>
+      </ul>
+
+      <h4>むしろ、これがチャンスでもあります</h4>
+      <p>「会社で初めてAIを導入した人」というポジションは、<strong>これからの時代でもの凄く価値があります</strong>。くぅさまがその第一人者になれるよう、おけもんカンパニーが全力で支えます🤝</p>
+
+      <div class="answer-callout">
+        <strong>🌷 ご相談だけでも大歓迎です。</strong>
+        「ここちょっと不安」「これって普通？」という日々のご相談も、いつでもお気軽にどうぞ。一人で抱え込まないで、ご一緒に進めましょう。
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Q8 何から始める ============ -->
+  <div class="qa-block" id="q8">
+    <div class="question">
+      <h3>やりたいこといっぱいあるけど、何から始めたらいい？</h3>
+      <div class="original">💬 当日のご発言：「やりたいこといっぱい言いすぎるんですけど何から…」（02:13頃）</div>
+    </div>
+    <div class="answer">
+      <span class="a-label">A. ANSWER</span>
+      <p>「やりたいことが沢山ある」のは素晴らしいことです✨ 全部叶えられるように、優先度をご提案します👇</p>
+
+      <h4>おすすめの順番（おけもん側のオススメ）</h4>
+      <ul>
+        <li><strong>① 制服在庫管理の自動化</strong>（最初）<br>→ 一番痛みが大きく、効果がすぐ見える。社内提案にも使える成功事例になる</li>
+        <li><strong>② 議事録の自動化</strong>（次に）<br>→ 制服在庫が回り出したら、すぐにこちらも導入。同じClaude Codeで実装可能</li>
+        <li><strong>③ シフト管理の自動化</strong>（その次）<br>→ 関わる人数が多いので、①②で慣れてから取り組むのが安心</li>
+        <li><strong>④ 旦那さま用 店長業務テンプレ</strong>（並行可能）<br>→ 規模が小さいので、いつでも着手できる。家族で実証してから会社に展開できる強み</li>
+      </ul>
+
+      <div class="answer-callout">
+        <strong>🎯 ポイント：</strong>
+        全部一度にやらず、<strong>1つずつ「動く状態」にして社内に見せる</strong>のが、信頼を積み上げる最短ルートです🚀
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Q9 自分のPCで動く？ ============ -->
+  <div class="qa-block" id="q9">
+    <div class="question">
+      <h3>自分のパソコンでも動くようになりますか？</h3>
+      <div class="original">💬 関連トピック：今おけちゃん側で動いている仕組みを、くぅさまの環境でも動かす方法</div>
+    </div>
+    <div class="answer">
+      <span class="a-label">A. ANSWER</span>
+      <p>はい、動きます！ ただし、<strong>最初の1回だけ「環境設定」が必要</strong>になります。</p>
+
+      <h4>具体的に必要な設定（一緒にやります）</h4>
+      <ul>
+        <li>💻 パソコンに必要な土台ソフトを入れる</li>
+        <li>🔑 GoogleスプレッドシートやGmailと繋ぐためのカギを取得する</li>
+        <li>⚙️ 設定ファイルを書く</li>
+        <li>✅ 動作確認テスト</li>
+      </ul>
+
+      <p>所要時間：<strong>初回1〜2時間程度</strong>（画面共有でご一緒に進めるのが一番スムーズです）</p>
+
+      <h4>Google API系の繋ぎ方の詳細</h4>
+      <p>Google サービス（スプシ・Gmail・カレンダー等）と繋ぐ方法は、大きく分けて2つあります👇</p>
+      <a class="related-link" href="./google-mcp-setup.html">方法①：Claude Desktop + MCPコネクタ方式</a>
+      &nbsp;
+      <a class="related-link" href="./google-aistudio-setup.html">方法②：Google AI Studio APIキー方式</a>
+
+      <div class="answer-callout">
+        <strong>🤝 くりかえしになりますが、設定はおけもんカンパニーがしっかり伴走します。</strong>
+        パソコンが得意でなくても大丈夫です。設定が終われば、それ以降は「集めて」と一言で動くようになります✨
+      </div>
+    </div>
+  </div>
+
+  <!-- ナビゲーション -->
+  <div class="navi-back">
+    <p>📖 他のページにも戻れます</p>
+    <a href="./">⬅️ 振り返り資料</a>
+    <a href="./requirements.html">📋 要件定義書</a>
+  </div>
+
+  <div class="footer">
+    🔒 PRIVATE / for くぅさま<br>
+    Q&A詳細 ／ 株式会社ソラリス（仮） × おけもんカンパニー
+  </div>
+
+</div>
+</body>
+</html>

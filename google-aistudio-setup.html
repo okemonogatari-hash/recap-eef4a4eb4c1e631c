@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="googlebot" content="noindex,nofollow">
+<title>方法② Google AI Studio APIキー方式 ｜ Google APIの繋ぎ方</title>
+<style>
+  :root {
+    --coral: #e8825c;
+    --coral-light: #fde4cf;
+    --coral-pale: #fff8f1;
+    --navy: #2a3f6a;
+    --navy-light: #4a5f88;
+    --cream: #fdfaf3;
+    --paper: #ffffff;
+    --ink: #2c2c2c;
+    --muted: #7a7a78;
+    --line: #ece8df;
+    --green: #5fa777;
+    --gold: #c9952a;
+    --gemini: #8e75ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Yu Gothic", "Helvetica Neue", "Arial", sans-serif;
+    font-size: 16px;
+    line-height: 1.85;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--paper);
+    box-shadow: 0 4px 40px rgba(42, 63, 106, 0.08);
+  }
+  .header {
+    background: linear-gradient(135deg, #f0ebff 0%, #fff 100%);
+    padding: 60px 56px 50px;
+    border-bottom: 4px solid var(--gemini);
+  }
+  .header .badge {
+    display: inline-block;
+    background: white;
+    color: var(--gemini);
+    padding: 5px 16px;
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    margin-bottom: 20px;
+    font-weight: 700;
+    border: 1.5px solid var(--gemini);
+  }
+  .header .method-tag {
+    display: inline-block;
+    background: var(--gemini);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-size: 28px;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .header .subtitle { color: var(--muted); font-size: 15px; }
+
+  .compare-section {
+    background: var(--coral-pale);
+    padding: 30px 56px;
+    border-bottom: 1px solid var(--line);
+  }
+  .compare-section h2 { font-size: 16px; color: var(--navy); margin-bottom: 12px; }
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .compare-card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px 20px;
+    border: 2px solid var(--line);
+    transition: all 0.2s;
+  }
+  .compare-card.active {
+    border-color: var(--gemini);
+    background: #f0ebff;
+  }
+  .compare-card h3 { font-size: 14.5px; color: var(--navy); margin-bottom: 6px; }
+  .compare-card p { font-size: 13px; color: var(--ink); margin: 0; line-height: 1.65; }
+  .compare-card a {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: var(--coral);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .compare-card a:hover { text-decoration: underline; }
+
+  section {
+    padding: 50px 56px;
+    border-top: 1px solid var(--line);
+  }
+  h2 {
+    font-size: 22px;
+    color: var(--navy);
+    border-left: 5px solid var(--gemini);
+    padding-left: 14px;
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+  h2 .small {
+    display: block;
+    font-size: 11px;
+    color: var(--gemini);
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  p { margin: 0 0 14px; }
+  strong { color: var(--navy); font-weight: 700; }
+
+  .step {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gemini);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+    position: relative;
+    counter-increment: step;
+  }
+  .step::before {
+    content: "STEP " counter(step);
+    position: absolute;
+    top: -14px;
+    left: 22px;
+    background: var(--gemini);
+    color: white;
+    padding: 3px 14px;
+    border-radius: 4px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+  .steps { counter-reset: step; }
+  .step h3 { font-size: 17px; color: var(--navy); margin: 6px 0 12px; }
+  .step p { font-size: 14.5px; line-height: 1.8; }
+  .step ul { padding-left: 22px; margin: 8px 0 12px; }
+  .step li { font-size: 14px; line-height: 1.75; margin-bottom: 4px; }
+
+  .screen-mock {
+    background: #f5f5f0;
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    color: var(--muted);
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .screen-mock .frame-label {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    margin-bottom: 6px;
+    font-family: "Hiragino Sans", sans-serif;
+  }
+
+  .tip {
+    background: #fdfaf2;
+    border-left: 4px solid var(--gold);
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .tip strong { color: var(--gold); }
+
+  .warning {
+    background: #fff3e8;
+    border-left: 4px solid var(--coral);
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .warning strong { color: var(--coral); }
+
+  .danger {
+    background: #fdf0ef;
+    border: 2px solid #d96868;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 18px 0;
+    font-size: 14.5px;
+  }
+  .danger strong { color: #d96868; }
+  .danger h4 { color: #d96868; margin-bottom: 8px; font-size: 16px; }
+
+  .external-link {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 8px 16px;
+    background: var(--gemini);
+    color: white !important;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+  .external-link:hover {
+    background: var(--navy);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(142, 117, 255, 0.3);
+  }
+  .external-link::before { content: "↗ "; }
+
+  .navi-back {
+    background: var(--navy);
+    color: white;
+    padding: 40px 56px;
+    text-align: center;
+  }
+  .navi-back a {
+    display: inline-block;
+    background: white;
+    color: var(--navy);
+    padding: 12px 28px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin: 4px;
+  }
+  .navi-back a:hover {
+    background: var(--coral);
+    color: white;
+    transform: translateY(-2px);
+  }
+  .navi-back p { color: rgba(255,255,255,0.85); margin-bottom: 16px; font-size: 14px; }
+
+  .footer {
+    text-align: center;
+    padding: 22px;
+    font-size: 11px;
+    color: var(--muted);
+    background: white;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 720px) {
+    .header { padding: 44px 22px 36px; }
+    .header h1 { font-size: 22px; }
+    section { padding: 36px 22px; }
+    .compare-section { padding: 24px 22px; }
+    .compare-row { grid-template-columns: 1fr; }
+    .navi-back { padding: 32px 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <span class="badge">🔗 GOOGLE API SETUP</span>
+    <span class="method-tag">METHOD 2 / 2</span>
+    <h1>Google AI Studio で<br>APIキーを取得して繋ぐ</h1>
+    <p class="subtitle">Gemini AIで画像生成・テキスト処理・チャット応答などを使えるようにする方法</p>
+  </div>
+
+  <!-- 比較セクション -->
+  <div class="compare-section">
+    <h2>👀 どちらの方法を選ぶか迷ったら</h2>
+    <div class="compare-row">
+      <div class="compare-card">
+        <h3>もう片方（MCPコネクタ）</h3>
+        <p>スプシ・Gmail・ドライブを<strong>そのまま操作</strong>したい方向け。普段のGoogle業務を効率化したいならこちら。</p>
+        <a href="./google-mcp-setup.html">↗ そちらを見る</a>
+      </div>
+      <div class="compare-card active">
+        <h3>📌 こちらの方法（APIキー方式）</h3>
+        <p><strong>Gemini AI（画像生成・高度なAI処理）</strong>を使いたいときの方法。スプシ操作には不向きだが、AI機能をフル活用できる。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 概要 ============ -->
+  <section>
+    <h2><span class="small">OVERVIEW</span>この方法でできること</h2>
+    <p><strong>Google AI Studio</strong>（Googleが提供しているAI機能の開発スペース）から<strong>APIキー</strong>と呼ばれる「合言葉」を取得して、自分のパソコンやアプリで<strong>Gemini（Googleの最新AI）を使えるようにする</strong>方法です。</p>
+    <p>主に、こんな場面で必要になります👇</p>
+    <ul style="padding-left: 24px;">
+      <li>🎨 <strong>AIで画像を生成したい</strong>（提案資料の挿絵・SNSの投稿画像など）</li>
+      <li>📝 <strong>大量の文章をAIで処理したい</strong>（議事録の自動要約・データ整形）</li>
+      <li>🤖 <strong>自動化スクリプトの中でAIを呼びたい</strong>（在庫データの異常値検出など）</li>
+    </ul>
+
+    <div class="tip">
+      <strong>💡 「APIキー」って？</strong> 自分専用の<strong>合言葉のようなもの</strong>。これをAIに見せると「あ、この人だな」と認識してもらえて、AIの機能を使えるようになります。
+    </div>
+  </section>
+
+  <!-- ============ 必要なもの ============ -->
+  <section style="background: var(--coral-pale);">
+    <h2><span class="small">REQUIREMENTS</span>事前に準備するもの</h2>
+    <ul style="padding-left: 24px;">
+      <li><strong>Googleアカウント</strong>（普段お使いのGmailアドレスでOK）</li>
+      <li><strong>パソコンとブラウザ</strong>（Chrome推奨）</li>
+      <li><strong>15分程度の時間</strong>（初回のみ）</li>
+      <li>無料枠で十分始められます。<strong>クレジットカードは原則不要</strong>です</li>
+    </ul>
+
+    <div class="tip">
+      <strong>💡 無料枠の話：</strong> Geminiの無料枠は1日あたり一定回数まで使えます。個人利用やテスト目的なら、無料枠で全然足ります。たくさん使うようになったら、その時点で有料プランに切り替えるかご相談しましょう。
+    </div>
+  </section>
+
+  <!-- ============ ステップ ============ -->
+  <section>
+    <h2><span class="small">STEPS</span>セットアップの流れ</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <h3>Google AI Studio にアクセス</h3>
+        <p>下のリンクから、Google AI Studio のサイトに行きます。</p>
+        <a class="external-link" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio APIキー画面を開く</a>
+        <p style="margin-top: 12px;">普段使っているGoogleアカウントでサインインを求められたらサインインしてください。</p>
+      </div>
+
+      <div class="step">
+        <h3>「APIキーを作成」ボタンをクリック</h3>
+        <p>画面に <strong>「Create API key」</strong> または <strong>「APIキーを作成」</strong> というボタンがあるので、クリックします。</p>
+        <div class="screen-mock">
+          <span class="frame-label">画面イメージ</span><br>
+          [Google AI Studio]<br>
+          ┌─────────────────────┐<br>
+          │ 🔑 APIキー一覧         │<br>
+          │ ─────────────────  │<br>
+          │  + Create API key   │ ← これをクリック<br>
+          └─────────────────────┘
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>プロジェクトを選ぶ（または新規作成）</h3>
+        <p>「Google Cloud Project」を選ぶ画面が出ます。すでにプロジェクトがあれば既存のもの、なければ「新規作成」を選んでOK。</p>
+        <div class="tip">
+          <strong>💡 補足：</strong> Google Cloud Project とは、Googleが提供しているサービスをまとめて管理する「フォルダのようなもの」です。深い理解は不要。「とりあえず1個作る」で進めてOKです。
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>APIキーが表示される（重要：保存する）</h3>
+        <p>APIキーが画面に表示されます。これは<strong>「AIzaSyxxxxxx...」のような長い文字列</strong>です。</p>
+        <div class="screen-mock">
+          <span class="frame-label">表示例</span><br>
+          AIzaSyDhX3****************P66TbH9bJXrN8v4
+        </div>
+        <p>このキーを<strong>必ずコピーして、安全な場所に保存</strong>してください。</p>
+
+        <div class="danger">
+          <h4>🚨 超重要：APIキーは絶対に他人に見せない</h4>
+          <p style="margin-bottom: 8px;">APIキーは「自分専用の合言葉」なので、他人に見られると以下のリスクがあります：</p>
+          <ul style="margin-left: 20px;">
+            <li>勝手にAIを使われて、料金が発生する可能性</li>
+            <li>個人情報が抜かれる可能性</li>
+            <li>SNSや公開サイトに貼り付けない</li>
+            <li>メールやLINEで人に送るのも避ける</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>「キーを制限する」設定を必ずする（推奨）</h3>
+        <p>APIキー作成画面で、<strong>「キーを制限」または「Edit API key」</strong>のリンクを見つけてクリック。</p>
+        <p>設定画面で、<strong>「APIの制限」</strong>を選び、使うAPI（例：「Generative Language API」）だけにチェック。</p>
+        <div class="warning">
+          <strong>⚠️ なぜ制限するの？</strong> 万が一APIキーが漏れた時、制限していないと他のサービス（Mapsなど）も勝手に使われて<strong>多額の請求が発生する事故</strong>が起きています。最初に必ず制限してください。
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>パソコンに「環境変数」として保存</h3>
+        <p>取得したAPIキーを、パソコンの<strong>「環境変数」</strong>として保存します。</p>
+        <p>ざっくり言うと「コードの中に直接書かず、パソコンの設定ファイルに書く」ことで、安全に使う仕組みです。</p>
+        <ul>
+          <li>Macの場合：ターミナルで <code>~/.zshenv</code> ファイルに書く</li>
+          <li>Windowsの場合：システム環境変数の設定画面で追加</li>
+        </ul>
+        <div class="tip">
+          <strong>🤝 ご安心ください：</strong> ここはおけもんカンパニーが画面共有で一緒に進めます。コピペするだけで終わります✨
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>動作確認</h3>
+        <p>パソコンのターミナルやアプリで、以下のように動作テストします（おけもんカンパニーがサポート）：</p>
+        <div class="screen-mock">
+          <span class="frame-label">テスト例</span><br>
+          $ echo $GEMINI_API_KEY<br>
+          AIzaSy****************<br>
+          ↓<br>
+          AIに「こんにちは」と話しかけて、返事が来たら成功🎉
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 注意事項 ============ -->
+  <section style="background: var(--coral-pale);">
+    <h2><span class="small">CAUTION</span>運用時の注意事項</h2>
+
+    <h3>① キーの管理</h3>
+    <ul style="padding-left: 24px;">
+      <li>APIキーは<strong>環境変数経由でのみ</strong>使う</li>
+      <li>SNS・GitHub・公開サイトに絶対に貼らない</li>
+      <li>定期的に「使用状況」を確認する（Google AI Studio画面で見れる）</li>
+    </ul>
+
+    <h3>② 漏れた時の対処</h3>
+    <ul style="padding-left: 24px;">
+      <li>すぐにGoogle AI Studioで<strong>そのキーを削除</strong>して、新しいキーを発行</li>
+      <li>影響範囲を確認（おけもんカンパニーが対応）</li>
+    </ul>
+
+    <h3>③ 課金が発生した場合</h3>
+    <ul style="padding-left: 24px;">
+      <li>無料枠を超えると課金されるので、<strong>使用量モニタリング</strong>を有効にする</li>
+      <li>不安な場合は、有料アップグレードを<strong>明示的に行わなければ無料枠で停止</strong>する設定にする</li>
+    </ul>
+
+    <div class="tip">
+      <strong>🤝 ご相談：</strong> APIキーまわりは慎重に進める領域なので、初期設定は必ずおけもんカンパニーが画面共有で一緒に進めます。一人で全部やる必要はありません。
+    </div>
+  </section>
+
+  <!-- ナビゲーション -->
+  <div class="navi-back">
+    <p>📖 他のページにも戻れます</p>
+    <a href="./">⬅️ 振り返り資料</a>
+    <a href="./faq.html">💬 Q&A</a>
+    <a href="./google-mcp-setup.html">← 方法①へ</a>
+  </div>
+
+  <div class="footer">
+    🔒 PRIVATE / for くぅさま<br>
+    Google API 接続ガイド：方法② ／ おけもんカンパニー
+  </div>
+
+</div>
+</body>
+</html>

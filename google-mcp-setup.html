@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="googlebot" content="noindex,nofollow">
+<title>方法① Claude Desktop + MCPコネクタ方式 ｜ Google APIの繋ぎ方</title>
+<style>
+  :root {
+    --coral: #e8825c;
+    --coral-light: #fde4cf;
+    --coral-pale: #fff8f1;
+    --navy: #2a3f6a;
+    --navy-light: #4a5f88;
+    --cream: #fdfaf3;
+    --paper: #ffffff;
+    --ink: #2c2c2c;
+    --muted: #7a7a78;
+    --line: #ece8df;
+    --green: #5fa777;
+    --gold: #c9952a;
+    --google-blue: #4285f4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Yu Gothic", "Helvetica Neue", "Arial", sans-serif;
+    font-size: 16px;
+    line-height: 1.85;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--paper);
+    box-shadow: 0 4px 40px rgba(42, 63, 106, 0.08);
+  }
+  .header {
+    background: linear-gradient(135deg, #e8f0fe 0%, #fff 100%);
+    padding: 60px 56px 50px;
+    border-bottom: 4px solid var(--google-blue);
+  }
+  .header .badge {
+    display: inline-block;
+    background: white;
+    color: var(--google-blue);
+    padding: 5px 16px;
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    margin-bottom: 20px;
+    font-weight: 700;
+    border: 1.5px solid var(--google-blue);
+  }
+  .header .method-tag {
+    display: inline-block;
+    background: var(--google-blue);
+    color: white;
+    padding: 4px 14px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-size: 28px;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .header .subtitle { color: var(--muted); font-size: 15px; }
+
+  .compare-section {
+    background: var(--coral-pale);
+    padding: 30px 56px;
+    border-bottom: 1px solid var(--line);
+  }
+  .compare-section h2 { font-size: 16px; color: var(--navy); margin-bottom: 12px; }
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .compare-card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px 20px;
+    border: 2px solid var(--line);
+    transition: all 0.2s;
+  }
+  .compare-card.active {
+    border-color: var(--google-blue);
+    background: #e8f0fe;
+  }
+  .compare-card h3 { font-size: 14.5px; color: var(--navy); margin-bottom: 6px; }
+  .compare-card p { font-size: 13px; color: var(--ink); margin: 0; line-height: 1.65; }
+  .compare-card a {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: var(--coral);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .compare-card a:hover { text-decoration: underline; }
+
+  section {
+    padding: 50px 56px;
+    border-top: 1px solid var(--line);
+  }
+  h2 {
+    font-size: 22px;
+    color: var(--navy);
+    border-left: 5px solid var(--google-blue);
+    padding-left: 14px;
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+  h2 .small {
+    display: block;
+    font-size: 11px;
+    color: var(--google-blue);
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  p { margin: 0 0 14px; }
+  strong { color: var(--navy); font-weight: 700; }
+
+  .step {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--google-blue);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+    position: relative;
+    counter-increment: step;
+  }
+  .step::before {
+    content: "STEP " counter(step);
+    position: absolute;
+    top: -14px;
+    left: 22px;
+    background: var(--google-blue);
+    color: white;
+    padding: 3px 14px;
+    border-radius: 4px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+  .steps { counter-reset: step; }
+  .step h3 {
+    font-size: 17px;
+    color: var(--navy);
+    margin: 6px 0 12px;
+  }
+  .step p { font-size: 14.5px; line-height: 1.8; }
+  .step ul { padding-left: 22px; margin: 8px 0 12px; }
+  .step li { font-size: 14px; line-height: 1.75; margin-bottom: 4px; }
+
+  .screen-mock {
+    background: #f5f5f0;
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    color: var(--muted);
+    font-family: "SF Mono", Menlo, monospace;
+  }
+  .screen-mock .frame-label {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    margin-bottom: 6px;
+    font-family: "Hiragino Sans", sans-serif;
+  }
+
+  .tip {
+    background: #fdfaf2;
+    border-left: 4px solid var(--gold);
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .tip strong { color: var(--gold); }
+
+  .warning {
+    background: #fff3e8;
+    border-left: 4px solid var(--coral);
+    padding: 14px 18px;
+    border-radius: 4px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .warning strong { color: var(--coral); }
+
+  .external-link {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 8px 16px;
+    background: var(--google-blue);
+    color: white !important;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+  .external-link:hover {
+    background: var(--navy);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+  }
+  .external-link::before { content: "↗ "; }
+
+  .navi-back {
+    background: var(--navy);
+    color: white;
+    padding: 40px 56px;
+    text-align: center;
+  }
+  .navi-back a {
+    display: inline-block;
+    background: white;
+    color: var(--navy);
+    padding: 12px 28px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin: 4px;
+  }
+  .navi-back a:hover {
+    background: var(--coral);
+    color: white;
+    transform: translateY(-2px);
+  }
+  .navi-back p { color: rgba(255,255,255,0.85); margin-bottom: 16px; font-size: 14px; }
+
+  .footer {
+    text-align: center;
+    padding: 22px;
+    font-size: 11px;
+    color: var(--muted);
+    background: white;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 720px) {
+    .header { padding: 44px 22px 36px; }
+    .header h1 { font-size: 22px; }
+    section { padding: 36px 22px; }
+    .compare-section { padding: 24px 22px; }
+    .compare-row { grid-template-columns: 1fr; }
+    .navi-back { padding: 32px 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <span class="badge">🔗 GOOGLE API SETUP</span>
+    <span class="method-tag">METHOD 1 / 2</span>
+    <h1>Claude Desktop + MCPコネクタで<br>Google系サービスと繋ぐ</h1>
+    <p class="subtitle">スプレッドシート・Gmail・ドライブ・カレンダー等を、Claude Desktopアプリに直接つなげる方法</p>
+  </div>
+
+  <!-- 比較セクション -->
+  <div class="compare-section">
+    <h2>👀 どちらの方法を選ぶか迷ったら</h2>
+    <div class="compare-row">
+      <div class="compare-card active">
+        <h3>📌 こちらの方法（MCPコネクタ）</h3>
+        <p>スプシの読み書き・Gmail操作・ドライブ管理など、<strong>「Googleサービスをそのまま操作」</strong>したいときにオススメ。設定が比較的かんたん。</p>
+      </div>
+      <div class="compare-card">
+        <h3>もう片方（AI Studio APIキー）</h3>
+        <p><strong>Gemini AIで画像生成・テキスト処理</strong>を使いたいときの方法。スプシ操作には不向き。</p>
+        <a href="./google-aistudio-setup.html">↗ そちらを見る</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 概要 ============ -->
+  <section>
+    <h2><span class="small">OVERVIEW</span>この方法でできること</h2>
+    <p><strong>Claude Desktop</strong>（パソコンにインストールするClaudeのアプリ版）に、Google系サービスを「コネクタ」として繋ぎ込む方法です。</p>
+    <p>繋ぎ込んだ後は、Claude Desktopのチャット画面で<strong>「マスタースプシのA1セルにこう書いて」</strong>とお願いするだけで、AIが代わりにスプシを操作してくれます。</p>
+
+    <h3 style="margin-top: 24px; font-size: 17px; color: var(--navy);">繋がるサービス</h3>
+    <ul style="padding-left: 24px;">
+      <li>📊 Google スプレッドシート</li>
+      <li>📁 Google ドライブ</li>
+      <li>📝 Google ドキュメント</li>
+      <li>📑 Google スライド</li>
+      <li>📅 Google カレンダー</li>
+      <li>✉️ Gmail</li>
+    </ul>
+  </section>
+
+  <!-- ============ 必要なもの ============ -->
+  <section style="background: var(--coral-pale);">
+    <h2><span class="small">REQUIREMENTS</span>事前に準備するもの</h2>
+    <ul style="padding-left: 24px;">
+      <li><strong>パソコン</strong>（Mac または Windows）</li>
+      <li><strong>Googleアカウント</strong>（普段お使いのGmailアドレス）</li>
+      <li><strong>Claudeのアカウント</strong>（claude.ai でサインアップ済み）</li>
+      <li><strong>30分程度の時間</strong>（初回のみ）</li>
+    </ul>
+
+    <div class="tip">
+      <strong>💡 Tip：</strong> 業務用Googleアカウントと個人用Googleアカウントがある場合、最初に「どちらのアカウントで運用するか」を決めておくとスムーズです。
+    </div>
+  </section>
+
+  <!-- ============ ステップ ============ -->
+  <section>
+    <h2><span class="small">STEPS</span>セットアップの流れ</h2>
+
+    <div class="steps">
+
+      <div class="step">
+        <h3>Claude Desktopアプリをダウンロード</h3>
+        <p>Claudeの公式サイトから、ご自身のパソコン用のアプリをダウンロードしてインストールします。</p>
+        <a class="external-link" href="https://claude.ai/download" target="_blank" rel="noopener">公式ダウンロードページを開く</a>
+        <div class="tip">
+          <strong>💡 補足：</strong> ブラウザ版でも使えますが、デスクトップアプリの方が「Googleサービスとの連携」が安定します。
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>Claude Desktopを起動してログイン</h3>
+        <p>インストールしたアプリを開いて、Claudeアカウントでサインインします。普段ブラウザで使っているものと同じアカウントでOKです。</p>
+        <div class="screen-mock">
+          <span class="frame-label">画面イメージ</span><br>
+          [Claude] アプリ起動<br>
+          ↓<br>
+          [Sign in] ボタンをクリック<br>
+          ↓<br>
+          メールアドレス入力 / Googleでサインイン
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>「設定」から「コネクタ」を開く</h3>
+        <p>Claude Desktopの<strong>設定画面</strong>を開き、<strong>「Connectors」または「コネクタ」</strong>のメニューを探します。</p>
+        <ul>
+          <li>Macの場合：左上のメニューバーから「Claude」 → 「Settings」</li>
+          <li>Windowsの場合：右上の歯車アイコンや、Macと同様にメニュー内に「Settings」</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <h3>「Google Drive」「Gmail」「Calendar」など、繋ぎたいサービスを選ぶ</h3>
+        <p>コネクタ一覧の中から、<strong>使いたいGoogle系サービス</strong>を選んでクリックします。例えば：</p>
+        <ul>
+          <li>📊 <strong>Google Drive</strong>（スプシ・ドキュメントを含む）</li>
+          <li>✉️ <strong>Gmail</strong></li>
+          <li>📅 <strong>Google Calendar</strong></li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <h3>Googleアカウントでサインインを許可</h3>
+        <p>「Connect」ボタンを押すと、ブラウザが開いて<strong>Googleのログイン画面</strong>が出てきます。</p>
+        <p>使うGoogleアカウントを選んで、<strong>「許可」</strong>をクリックします。</p>
+        <div class="warning">
+          <strong>⚠️ 注意：</strong> アクセス許可の確認画面で「アクセスできる範囲」が表示されます。仕事のGmail等の重要情報を扱う場合は、内容をよくご確認ください。
+        </div>
+      </div>
+
+      <div class="step">
+        <h3>動作確認</h3>
+        <p>Claude Desktopに戻って、チャットで以下のように話しかけてみてください👇</p>
+        <div class="screen-mock">
+          <span class="frame-label">チャット画面で入力</span><br>
+          私のGoogleドライブにあるスプシを5件だけ教えて
+        </div>
+        <p>ファイル一覧が返ってくれば成功です🎉</p>
+      </div>
+
+      <div class="step">
+        <h3>本番の業務に使ってみる</h3>
+        <p>くぅさまの場合、こんな指示が出せるようになります👇</p>
+        <ul>
+          <li>「マスタースプシのA1セルから50行を読み取って」</li>
+          <li>「店舗一覧スプシの『梅田店』の在庫数を更新して」</li>
+          <li>「Gmailの新着メールを5件まとめて教えて」</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ 困ったら ============ -->
+  <section style="background: var(--coral-pale);">
+    <h2><span class="small">TROUBLESHOOTING</span>困った時のために</h2>
+
+    <h3>よくある「あれ？」</h3>
+    <ul style="padding-left: 24px; margin-top: 8px;">
+      <li><strong>「コネクタ」メニューが見つからない</strong> → アプリのバージョンが古いかも。最新版にアップデート</li>
+      <li><strong>サインインを許可しても繋がらない</strong> → 数分待ってから再度試す。Claudeアプリを再起動</li>
+      <li><strong>「アクセス権限がない」エラー</strong> → 別のGoogleアカウントでログインしている可能性。アカウント切替</li>
+      <li><strong>会社のGoogleアカウントで繋がらない</strong> → 情報システム部門に「外部アプリへの接続許可」を確認</li>
+    </ul>
+
+    <div class="tip">
+      <strong>🤝 ご相談：</strong> どこかで詰まったら、画面共有で一緒に進めますのでお気軽にお声がけください。よくある「あれ？」もほとんどの場合は数分で解決します✨
+    </div>
+  </section>
+
+  <!-- ナビゲーション -->
+  <div class="navi-back">
+    <p>📖 他のページにも戻れます</p>
+    <a href="./">⬅️ 振り返り資料</a>
+    <a href="./faq.html">💬 Q&A</a>
+    <a href="./google-aistudio-setup.html">方法②へ →</a>
+  </div>
+
+  <div class="footer">
+    🔒 PRIVATE / for くぅさま<br>
+    Google API 接続ガイド：方法① ／ おけもんカンパニー
+  </div>
+
+</div>
+</body>
+</html>
