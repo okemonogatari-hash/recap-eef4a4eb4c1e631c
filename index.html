@@ -281,34 +281,94 @@
   .insight p { font-size: 13.5px; color: var(--ink); margin: 0; line-height: 1.7; }
 
   /* ============ 関連リンク ============ */
+  .link-section-intro {
+    background: #f4faf6;
+    border-left: 4px solid var(--green);
+    padding: 14px 20px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+  .link-section-intro strong { color: var(--green); }
+
   .link-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 16px;
     margin: 20px 0;
   }
   .link-btn {
     background: white;
-    border: 2px solid var(--line);
-    border-radius: 12px;
-    padding: 22px 24px;
+    border: 2px solid var(--coral);
+    border-radius: 14px;
+    padding: 24px 26px 22px;
     text-decoration: none;
     color: var(--ink);
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     display: block;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(232, 130, 92, 0.08);
+  }
+  .link-btn::after {
+    content: "↗";
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-size: 22px;
+    color: var(--coral);
+    font-weight: 700;
+    transition: all 0.25s ease;
   }
   .link-btn:hover {
     border-color: var(--coral);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(232, 130, 92, 0.18);
+    background: var(--coral-pale);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(232, 130, 92, 0.25);
     color: var(--ink);
   }
-  .link-btn .icon { font-size: 28px; margin-bottom: 8px; line-height: 1; }
-  .link-btn .title { color: var(--navy); font-weight: 700; font-size: 15px; margin-bottom: 4px; display: block; }
-  .link-btn .desc { color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+  .link-btn:hover::after {
+    transform: translate(3px, -3px);
+    color: var(--navy);
+  }
+  .link-btn .icon { font-size: 30px; margin-bottom: 10px; line-height: 1; }
+  .link-btn .link-action {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    font-size: 10.5px;
+    padding: 2px 9px;
+    border-radius: 100px;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .link-btn .title { color: var(--navy); font-weight: 700; font-size: 16px; margin-bottom: 6px; display: block; line-height: 1.4; }
+  .link-btn .desc { color: var(--muted); font-size: 12.5px; line-height: 1.6; display: block; }
   .link-btn.featured {
     background: linear-gradient(135deg, var(--coral-pale), #fff5e8);
     border-color: var(--coral);
+    border-width: 3px;
+    box-shadow: 0 4px 16px rgba(232, 130, 92, 0.15);
+  }
+  .link-btn.featured .link-action {
+    background: var(--navy);
+  }
+  .link-btn.requirements {
+    background: linear-gradient(135deg, #f3f5fa, #ffffff);
+    border-color: var(--navy);
+    grid-column: 1 / -1;
+  }
+  .link-btn.requirements::after {
+    color: var(--navy);
+  }
+  .link-btn.requirements .link-action {
+    background: var(--navy);
+  }
+  .link-btn.requirements:hover {
+    background: linear-gradient(135deg, #e8edf5, #f8faff);
+    border-color: var(--navy);
+    box-shadow: 0 8px 24px rgba(42, 63, 106, 0.25);
   }
 
   /* ============ 締め ============ */
@@ -601,27 +661,48 @@
 
   <!-- ============================ 関連リンク ============================ -->
   <section>
-    <h2><span class="small">SECTION 07</span>関連リンク（このページの裏側）</h2>
-    <p>当日のお話の証跡や、おけもんカンパニーが作成中の資料へのリンクです。</p>
+    <h2><span class="small">SECTION 07</span>🔗 関連資料・リンク集</h2>
+    <div class="link-section-intro">
+      💡 <strong>このセクションは全部「リンク」になっています。</strong>下のカードをクリック・タップすると、当日の音声・要件定義書・サンプル資料などが新しいタブで開きます📱
+    </div>
 
     <div class="link-grid">
+      <!-- 要件定義書 -->
+      <a class="link-btn requirements" href="./requirements.html">
+        <div class="icon">📋</div>
+        <span class="link-action">↗ 要件定義書を開く</span>
+        <span class="title">制服在庫管理AI 要件定義書（くぅさま向け詳細版）</span>
+        <span class="desc">本日のお話を技術的にも整理した設計書。冒頭に「⚠️ パソコン側の事前設定について」の注意書きあり。同じプライベートURL内にあります。</span>
+      </a>
+
+      <!-- 当日の音声 -->
       <a class="link-btn featured" href="https://app.circleback.ai/view/mone9006opb5nxl6su?tab=transcript" target="_blank" rel="noopener">
         <div class="icon">🎧</div>
+        <span class="link-action">↗ Circlebackで開く</span>
         <span class="title">当日の音声・全文文字起こし</span>
-        <span class="desc">Circlebackで記録された当日の会話をそのままご覧いただけます（音声再生・全発言）</span>
+        <span class="desc">Circlebackで記録された当日の会話をそのままご覧いただけます（音声再生・全発言）。</span>
       </a>
+
+      <!-- 公開提案書 -->
       <a class="link-btn" href="https://okemonogatari-hash.github.io/uniform-management-demo/" target="_blank" rel="noopener">
         <div class="icon">📄</div>
+        <span class="link-action">↗ 提案書を開く</span>
         <span class="title">AI自動化の提案書（公開版）</span>
-        <span class="desc">「制服在庫管理の自動化」のビフォーアフターを絵で見られる提案書。実物のスプシ埋め込みあり。</span>
+        <span class="desc">ビフォーアフターを絵で見られる提案書。実物のスプシ埋め込みあり。</span>
       </a>
+
+      <!-- マスタースプシ -->
       <a class="link-btn" href="https://docs.google.com/spreadsheets/d/13whg_PM3ShaV4iSFJnw9_Z9xGQf7xGB_rwP8hzJHKF4" target="_blank" rel="noopener">
         <div class="icon">📊</div>
+        <span class="link-action">↗ スプシを開く</span>
         <span class="title">サンプル：マスタースプシ</span>
         <span class="desc">「集約された後の表」のイメージ。6店舗 × 10商品 = 60行のサンプルデータ入り。</span>
       </a>
+
+      <!-- Circleback Notes -->
       <a class="link-btn" href="https://app.circleback.ai/view/mone9006opb5nxl6su" target="_blank" rel="noopener">
         <div class="icon">📝</div>
+        <span class="link-action">↗ Notesを開く</span>
         <span class="title">Circleback Notes（AI議事録）</span>
         <span class="desc">CirclebackのAIが当日の会話を自動要約したNotes。Action Itemsもこちらで確認できます。</span>
       </a>
