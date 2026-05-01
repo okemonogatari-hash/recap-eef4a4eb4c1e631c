@@ -329,17 +329,22 @@
       <p>これ、本当に面白い使い方なんです🌟</p>
       <p>AIには<strong>「あなたは経理担当です」「あなたは営業担当です」</strong>のように、<strong>役割を与えて使う</strong>ことができるんです。</p>
 
-      <h4>例えば、おけもんカンパニーの場合</h4>
-      <p>1人のおけもん（おけちゃん）の中に、AIで作った仲間が何人もいます👇</p>
+      <h4>例えば、おけもんカンパニーの場合（社内事例として）</h4>
+      <p>うちでは、1人のおけもん（おけちゃん）の中に、AIで作った仲間に役割を与えて使い分けています👇</p>
       <ul>
-        <li>🐱 <strong>あおいCDO</strong> ＝ 技術・システムまわりの担当</li>
-        <li>💰 <strong>しーちゃんCFO</strong> ＝ 経理・お金まわりの担当</li>
-        <li>🔥 <strong>まなCSO</strong> ＝ 営業・お客様対応の担当</li>
-        <li>✨ <strong>りんCMO</strong> ＝ 発信・マーケティングの担当</li>
-        <li>🌱 <strong>ゆいCPO</strong> ＝ 商品・コーチングの担当</li>
-        <li>🎤 <strong>はるかCEO</strong> ＝ 全体まとめ役</li>
+        <li>👔 <strong>技術・システムまわり担当</strong></li>
+        <li>💰 <strong>経理・お金まわり担当</strong></li>
+        <li>🔥 <strong>営業・お客様対応担当</strong></li>
+        <li>✨ <strong>発信・マーケティング担当</strong></li>
+        <li>🌱 <strong>商品・コーチング担当</strong></li>
+        <li>🎤 <strong>全体まとめ役</strong></li>
       </ul>
       <p>1つ1つは同じClaude Codeなんですが、それぞれに<strong>「あなたは経理担当として、こういう視点で答えてください」</strong>と役割を与えているので、まるで<strong>社員が何人もいるように使える</strong>んです。</p>
+
+      <h4>もう1つのスタイル：「学長スタイル」（仮）</h4>
+      <p>これとは別に、<strong>「1つのチャットの中で複数の役割を渡して、そのチャットの限界まで動かす」</strong>使い方もあります。</p>
+      <p>たとえば「あなたは今からPMとして〇〇して、次にデザイナーとして△△して、最後にレビュワーとして□□してください」のように、1つのチャットの中でロールを連続で切り替えていく方式。</p>
+      <p>どちらも一長一短で、業務によって使い分けます。</p>
 
       <h4>くぅさまの場合、こんな仲間が作れそうです</h4>
       <ul>
@@ -360,31 +365,36 @@
   <!-- ============ Q4 Claude vs ChatGPT ============ -->
   <div class="qa-block" id="q4">
     <div class="question">
-      <h3>Claude CodeとChatGPT、両方使う必要があるの？連携できるの？</h3>
-      <div class="original">💬 当日のご発言：「黒子ちゃんとチャピチャピをどうやってつなげるのみたいな…」（51:36頃）</div>
+      <h3>Claude CodeからAPI経由で、ChatGPT（Image-2など）やGeminiを呼び出して使えるの？</h3>
+      <div class="original">💬 当日のご発言：「黒子ちゃんとチャピチャピをどうやってつなげるのみたいな…」（51:36頃）／本来のご意図：APIでつなぐ話</div>
     </div>
     <div class="answer">
       <span class="a-label">A. ANSWER</span>
-      <p>この使い分けはよく聞かれます！シンプルに整理すると…</p>
+      <p>結論からお伝えすると、<strong>はい、技術的には可能です</strong>✨</p>
+      <p>たとえば、<strong>Claude Codeから OpenAIのImage-2（画像生成）を呼び出して画像を作る</strong>、<strong>Claude Codeから Gemini API を呼び出してGoogleの最新AIに処理を任せる</strong>、といった連携ができます。</p>
 
-      <h4>ざっくりの違い</h4>
+      <h4>ざっくりの仕組み</h4>
       <ul>
-        <li>🎨 <strong>ChatGPT（チャッピー）</strong>：おしゃべり・文章作成・画像生成が得意。スマホアプリで気軽に使える</li>
-        <li>💻 <strong>Claude Code（黒子ちゃん）</strong>：パソコンの中で「自動で何かをする」のが得意。スプシ操作・ファイル整理など実作業</li>
+        <li>① Claude Code が「司令塔」として全体を進める</li>
+        <li>② 画像が必要な箇所では、OpenAIのAPI（Image-2等）に「こんな画像お願い」と依頼</li>
+        <li>③ Geminiの方が得意な処理は、Gemini APIに依頼</li>
+        <li>④ それぞれから返ってきた結果を、Claude Codeがまとめて1つの成果物にする</li>
       </ul>
 
-      <h4>両方を連携させる方法</h4>
-      <p>結論：<strong>連携できますし、必須ではありません</strong>。どちらか片方でも十分な場面が多いです。</p>
-      <p>例えば、<strong>ChatGPTで作った企画書</strong>を、<strong>Claude Codeでスプシに自動入力</strong>、みたいな連携ができます。</p>
-
       <div class="answer-callout">
-        <strong>💡 おすすめの使い分け（くぅさまの場合）：</strong>
-        <ul style="margin: 8px 0 0 20px; padding: 0;">
-          <li>📊 制服在庫の自動集約 → Claude Code</li>
-          <li>✉️ 「店舗向けのお願い文を書いて」みたいな文章作成 → ChatGPT（スマホで気軽に）</li>
-          <li>🖼️ 社内資料用の図やイラスト → ChatGPT（画像生成）</li>
-        </ul>
+        <strong>📝 ただし、ここは話が多岐にわたります。</strong>
+        各APIキーの取得方法・課金プランの選び方・セキュリティ管理など、<strong>1ページではお伝えしきれない領域</strong>です。
+        <br><br>
+        ご興味あれば <strong>別途ご質問</strong>ください🌷 個別にご説明させていただきます。<br>
+        現時点では、<strong>Claude Code単体で十分カバーできる範囲</strong>（制服在庫管理・議事録自動化）から進めるのがオススメです。
       </div>
+
+      <h4>とはいえ、覚えておくと将来便利なこと</h4>
+      <ul>
+        <li>🔑 <strong>OpenAI API キー</strong>を取得すれば、Claude CodeからChatGPTやImage-2を呼び出せる</li>
+        <li>🔑 <strong>Gemini API キー</strong>を取得すれば、Claude CodeからGeminiを呼び出せる（取得方法は <a href="./google-aistudio-setup.html" style="color: var(--coral); font-weight: 700;">こちら</a>）</li>
+        <li>📌 ゆくゆく社内提案で「画像生成も自動化したい」となった時、ここの仕組みが効いてきます</li>
+      </ul>
     </div>
   </div>
 
@@ -431,9 +441,6 @@
 
       <h4>パターン②：社内提案で「新ツール導入」の許可をもらう</h4>
       <p>「これだけの業務効率化が見込めます」を提案書（本日お送りしている提案書）でお見せして、<strong>正式に導入許可をもらう</strong>。社内提案にはこちらの提案書をそのまま使ってOK。</p>
-
-      <h4>パターン③：クラウドで動かす</h4>
-      <p>パソコンに何も入れず、<strong>インターネット上で動くサービス</strong>として運用する形。月額の運用費がかかりますが、業務PCに何も入れずに使えます。</p>
 
       <div class="answer-callout">
         <strong>💡 まずはパターン①から試すのがオススメです。</strong>
