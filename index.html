@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="googlebot" content="noindex,nofollow">
+<title>2026-05-01 個別相談 振り返り資料 ｜ おけもんカンパニー</title>
+<style>
+  :root {
+    --coral: #e8825c;
+    --coral-light: #fde4cf;
+    --coral-pale: #fff8f1;
+    --navy: #2a3f6a;
+    --navy-light: #4a5f88;
+    --cream: #fdfaf3;
+    --paper: #ffffff;
+    --ink: #2c2c2c;
+    --muted: #7a7a78;
+    --line: #ece8df;
+    --green: #5fa777;
+    --red: #d96868;
+    --gold: #c9952a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Hiragino Sans", "Yu Gothic", "Helvetica Neue", "Arial", sans-serif;
+    font-size: 16px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--paper);
+    box-shadow: 0 4px 40px rgba(42, 63, 106, 0.08);
+  }
+
+  /* ============ ヘッダー ============ */
+  .header {
+    background: linear-gradient(135deg, var(--coral-pale) 0%, #fff5e8 100%);
+    padding: 60px 56px 50px;
+    border-bottom: 4px solid var(--coral);
+  }
+  .header .badge {
+    display: inline-block;
+    background: white;
+    color: var(--coral);
+    padding: 5px 16px;
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    margin-bottom: 20px;
+    font-weight: 700;
+    border: 1.5px solid var(--coral);
+  }
+  .header h1 {
+    font-size: 30px;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+  .header .subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 24px;
+    font-size: 13.5px;
+    color: var(--muted);
+    background: rgba(255,255,255,0.55);
+    padding: 16px 22px;
+    border-radius: 10px;
+    border: 1px solid rgba(232, 130, 92, 0.2);
+  }
+  .meta-grid b { color: var(--ink); font-weight: 600; }
+
+  /* ============ 共通 ============ */
+  section {
+    padding: 56px;
+    border-top: 1px solid var(--line);
+  }
+  section.alt { background: var(--coral-pale); }
+  h2 {
+    font-size: 24px;
+    color: var(--navy);
+    border-left: 5px solid var(--coral);
+    padding-left: 14px;
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+  h2 .small {
+    display: block;
+    font-size: 11px;
+    color: var(--coral);
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  h3 {
+    font-size: 18px;
+    color: var(--navy);
+    margin: 28px 0 14px;
+  }
+  p { margin: 0 0 16px; }
+  strong { color: var(--navy); font-weight: 700; }
+
+  /* ============ ハイライト数字 ============ */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .stat {
+    background: white;
+    border-radius: 10px;
+    padding: 18px 14px;
+    text-align: center;
+    border: 1px solid var(--line);
+  }
+  .stat .label { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 6px; }
+  .stat .value { font-size: 26px; font-weight: 700; color: var(--coral); line-height: 1; }
+  .stat .unit { font-size: 13px; color: var(--muted); margin-left: 2px; }
+
+  /* ============ 業務フロー図 ============ */
+  .flow-diagram {
+    background: white;
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 32px 24px;
+    margin: 24px 0;
+  }
+  .flow-diagram h4 {
+    text-align: center;
+    color: var(--navy);
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .flow-node {
+    background: var(--coral-light);
+    border: 2px solid var(--coral);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    min-width: 110px;
+    flex: 0 0 auto;
+  }
+  .flow-node.muted { background: #f5f5f0; border-color: var(--line); }
+  .flow-node.bottleneck {
+    background: #fde4cf;
+    border-color: var(--red);
+    border-width: 3px;
+    box-shadow: 0 4px 12px rgba(217, 104, 104, 0.2);
+  }
+  .flow-node .emoji { font-size: 26px; line-height: 1; margin-bottom: 4px; }
+  .flow-node .label { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .flow-node .sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .flow-arrow { color: var(--coral); font-size: 22px; flex-shrink: 0; }
+
+  .flow-note {
+    margin-top: 20px;
+    padding: 12px 18px;
+    background: #fef3f0;
+    border-left: 4px solid var(--red);
+    border-radius: 4px;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+
+  /* ============ 困りごと ============ */
+  .quote-list { margin: 16px 0; }
+  .quote {
+    background: var(--coral-pale);
+    border-left: 4px solid var(--coral);
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.8;
+  }
+  .quote::before { content: "「"; color: var(--coral); font-weight: 700; }
+  .quote::after { content: "」"; color: var(--coral); font-weight: 700; }
+  .quote .ts {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+  .quote .ts::before, .quote .ts::after { content: ""; }
+
+  /* ============ 当日触ったもの ============ */
+  .hands-on {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .hands-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--navy);
+    border-radius: 10px;
+    padding: 20px 18px;
+  }
+  .hands-card .icon { font-size: 32px; margin-bottom: 10px; line-height: 1; }
+  .hands-card h4 { color: var(--navy); font-size: 16px; margin-bottom: 8px; }
+  .hands-card p { font-size: 13.5px; color: var(--ink); line-height: 1.7; margin: 0; }
+
+  /* ============ 次のステップ ============ */
+  .steps {
+    counter-reset: step;
+    margin: 24px 0;
+  }
+  .step {
+    counter-increment: step;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 70px;
+  }
+  .step::before {
+    content: counter(step);
+    position: absolute;
+    left: 22px;
+    top: 22px;
+    width: 32px;
+    height: 32px;
+    background: var(--coral);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-weight: 700;
+  }
+  .step h4 {
+    font-size: 16px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .step p { font-size: 14px; color: var(--ink); margin: 0; line-height: 1.7; }
+  .step .who { display: inline-block; background: var(--navy); color: white; padding: 1px 9px; border-radius: 100px; font-size: 11px; margin-left: 8px; vertical-align: 2px; }
+
+  /* ============ ハイライト気づき ============ */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .insight {
+    background: white;
+    border-radius: 10px;
+    padding: 20px 22px;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold);
+  }
+  .insight h4 {
+    color: var(--navy);
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .insight p { font-size: 13.5px; color: var(--ink); margin: 0; line-height: 1.7; }
+
+  /* ============ 関連リンク ============ */
+  .link-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .link-btn {
+    background: white;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 24px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s;
+    display: block;
+  }
+  .link-btn:hover {
+    border-color: var(--coral);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(232, 130, 92, 0.18);
+    color: var(--ink);
+  }
+  .link-btn .icon { font-size: 28px; margin-bottom: 8px; line-height: 1; }
+  .link-btn .title { color: var(--navy); font-weight: 700; font-size: 15px; margin-bottom: 4px; display: block; }
+  .link-btn .desc { color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+  .link-btn.featured {
+    background: linear-gradient(135deg, var(--coral-pale), #fff5e8);
+    border-color: var(--coral);
+  }
+
+  /* ============ 締め ============ */
+  .closing {
+    background: var(--navy);
+    color: white;
+    padding: 50px 56px;
+    text-align: center;
+  }
+  .closing h2 { color: white; border: none; padding: 0; }
+  .closing h2 .small { color: var(--coral-light); }
+  .closing p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.9; }
+  .closing .signature {
+    margin-top: 24px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 22px;
+    font-size: 11px;
+    color: var(--muted);
+    background: white;
+    border-top: 1px solid var(--line);
+    line-height: 1.6;
+  }
+  .footer .private-tag {
+    display: inline-block;
+    background: #f5f5f0;
+    padding: 2px 10px;
+    border-radius: 4px;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: 0.08em;
+    font-size: 10px;
+  }
+
+  /* ============ レスポンシブ ============ */
+  @media (max-width: 720px) {
+    .header { padding: 44px 22px 36px; }
+    .header h1 { font-size: 22px; }
+    section { padding: 40px 22px; }
+    h2 { font-size: 20px; }
+    .stat-grid, .hands-on, .insight-grid, .link-grid { grid-template-columns: 1fr 1fr; }
+    .stat-grid { gap: 10px; }
+    .closing { padding: 40px 22px; }
+    .flow-row { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+    .meta-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============================ ヘッダー ============================ -->
+  <div class="header">
+    <span class="badge">🔒 PRIVATE / FOR くぅさま</span>
+    <h1>2026年5月1日<br>個別相談セッション 振り返り</h1>
+    <p class="subtitle">Claude Code ハンズオン × 制服在庫管理 × これからのお話</p>
+    <div class="meta-grid">
+      <div><b>日時：</b> 2026年5月1日（金）</div>
+      <div><b>時間：</b> 約1時間33分</div>
+      <div><b>会議名：</b> Claude Code ハンズオン・在庫管理自動化</div>
+      <div><b>参加：</b> くぅさま（人事部）／おけもん／同席者さま</div>
+    </div>
+  </div>
+
+  <!-- ============================ ハイライト数字 ============================ -->
+  <section>
+    <h2><span class="small">SECTION 01</span>当日見えたものを、4つの数字で。</h2>
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="label">対象店舗数</div>
+        <div class="value">50<span class="unit">店舗</span></div>
+      </div>
+      <div class="stat">
+        <div class="label">月末棚卸しの所要</div>
+        <div class="value">3<span class="unit">時間〜</span></div>
+      </div>
+      <div class="stat">
+        <div class="label">関連エクセルの種類</div>
+        <div class="value">複数<span class="unit">枚</span></div>
+      </div>
+      <div class="stat">
+        <div class="label">自動化候補の業務</div>
+        <div class="value">3<span class="unit">領域</span></div>
+      </div>
+    </div>
+    <p style="font-size: 13.5px; color: var(--muted); text-align: center; margin-top: 8px;">
+      ※ 自動化候補3領域：<strong>制服在庫管理</strong> ／ <strong>議事録作成</strong> ／ <strong>シフト管理</strong>
+    </p>
+  </section>
+
+  <!-- ============================ 業務フロー ============================ -->
+  <section class="alt">
+    <h2><span class="small">SECTION 02</span>当日ヒアリングで見えた「業務の流れ」</h2>
+    <p>くぅさまから教えていただいた、制服発注・在庫管理の現状フローです。50店舗を1人で集約していらっしゃる構造が見えました。</p>
+
+    <div class="flow-diagram">
+      <h4>📦 制服モノ・データの流れ（現状）</h4>
+      <div class="flow-row">
+        <div class="flow-node muted">
+          <div class="emoji">🏭</div>
+          <div class="label">メーカー</div>
+          <div class="sub">制服を製造</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node muted">
+          <div class="emoji">📦</div>
+          <div class="label">外部倉庫</div>
+          <div class="sub">本社外で保管</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="emoji">🏪</div>
+          <div class="label">50店舗</div>
+          <div class="sub">各店舗が任意で発注</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node bottleneck">
+          <div class="emoji">😓</div>
+          <div class="label">くぅさま</div>
+          <div class="sub">人事部で全集約</div>
+        </div>
+      </div>
+      <div class="flow-note">
+        💡 <strong>ボトルネック：</strong> 各店舗は任意のタイミング・任意の方法で発注 ➡️ くぅさまが各店舗のExcelをマスターExcelに手で転記して整合性を確認していらっしゃる構造。月末棚卸しでは、これに加えて在庫数の突合せが発生。
+      </div>
+    </div>
+
+    <h3>✨ AIに任せると、こうなります</h3>
+    <div class="flow-diagram">
+      <h4>🤖 自動集約の流れ（AI導入後の理想）</h4>
+      <div class="flow-row">
+        <div class="flow-node muted">
+          <div class="emoji">📋</div>
+          <div class="label">50店舗のデータ</div>
+          <div class="sub">各店舗で記入</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: linear-gradient(135deg, #eff7f1, #f4faf6); border-color: var(--green);">
+          <div class="emoji">🤖</div>
+          <div class="label">AI（Claude Code）</div>
+          <div class="sub">自動集約＋数字チェック</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: linear-gradient(135deg, #eff7f1, #f4faf6); border-color: var(--green);">
+          <div class="emoji">📊</div>
+          <div class="label">マスター</div>
+          <div class="sub">自動更新</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: linear-gradient(135deg, #eff7f1, #f4faf6); border-color: var(--green);">
+          <div class="emoji">☕</div>
+          <div class="label">くぅさま</div>
+          <div class="sub">確認するだけ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 困りごと ============================ -->
+  <section>
+    <h2><span class="small">SECTION 03</span>くぅさまから聞こえた「お困りごと」</h2>
+    <p>当日いただいたお声から、印象に残った発言を引用させていただきました。</p>
+
+    <div class="quote-list">
+      <div class="quote">
+        会社のこれはすごい複雑で、私が人事部なんですけど、私が制服をメーカーに発注してで発注のメールもめんどくさいし…発注したものを自分の本社に置けないので別の倉庫を借り
+        <span class="ts">— 制服フロー全体について</span>
+      </div>
+      <div class="quote">
+        50店舗ぐらいあるんです。各店舗がこの倉庫に発注をかけるんですよ。何枚うちの店舗に送ってくださいっていうのをかけるんです
+        <span class="ts">— 規模感について</span>
+      </div>
+      <div class="quote">
+        各店舗のエクセルデータがあって、そこに私が入れないといけないです
+        <span class="ts">— 現状の集約作業</span>
+      </div>
+      <div class="quote">
+        お互いにこの社内様式のエクセルが何個もにわかっているすごい複雑なんで
+        <span class="ts">— Excelの複雑性</span>
+      </div>
+      <div class="quote">
+        会社で生育管理とか在庫管理とかそういう管理とかっていうのをしてみたいんですけど
+        <span class="ts">— やりたいこと</span>
+      </div>
+      <div class="quote">
+        会社がやっぱりAI導入とかも自分だけの領域ですることにはなるんですか
+        <span class="ts">— 社内でのお立場の不安</span>
+      </div>
+      <div class="quote">
+        ここまで録音したやつをここに入れ込んだらこれコピペするだけはめちゃくちゃ楽ですよね
+        <span class="ts">— 議事録自動化への期待</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 当日触ったもの ============================ -->
+  <section class="alt">
+    <h2><span class="small">SECTION 04</span>当日のハンズオンで一緒に触ったもの</h2>
+    <p>「実際に動かしてみる」を大事にしながら、いくつか一緒に体験していただきました。</p>
+
+    <div class="hands-on">
+      <div class="hands-card">
+        <div class="icon">💻</div>
+        <h4>Claude Code 基本操作</h4>
+        <p>パソコンでの起動・操作・指示の出し方。「指示を文章で出すだけ」を体感していただきました。</p>
+      </div>
+      <div class="hands-card">
+        <div class="icon">📊</div>
+        <h4>在庫管理の自動化イメージ</h4>
+        <p>複数Excelをマスター化する仕組みについて、AIで自動転記が可能であることをご確認いただきました。</p>
+      </div>
+      <div class="hands-card">
+        <div class="icon">📝</div>
+        <h4>議事録の作成フロー</h4>
+        <p>録音から文字起こし、要約、ファイル保存までを自動化するイメージを体験。</p>
+      </div>
+      <div class="hands-card">
+        <div class="icon">🎨</div>
+        <h4>ホームページ・資料生成</h4>
+        <p>資料・テンプレート（PowerPointなど）をAIで作成する流れも一部ご紹介。</p>
+      </div>
+      <div class="hands-card">
+        <div class="icon">🎙</div>
+        <h4>音声入力での操作</h4>
+        <p>「キーボードで打たなくていい」音声操作のイメージもお伝えしました。</p>
+      </div>
+      <div class="hands-card">
+        <div class="icon">🤝</div>
+        <h4>スキル登録の考え方</h4>
+        <p>定型業務（旦那さまの店長業務テンプレなど）を「スキル」としてAIに覚えさせる発想もご紹介。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 次のステップ ============================ -->
+  <section>
+    <h2><span class="small">SECTION 05</span>次のステップ</h2>
+    <p>当日合意したこと・これからの動きを整理しました。</p>
+
+    <div class="steps">
+      <div class="step">
+        <h4>提案書の準備 <span class="who">おけもん側</span></h4>
+        <p>くぅさまが社内で「人事部ミーティング」までに使える、AIでできることのビフォーアフター提案書をご用意します。</p>
+      </div>
+      <div class="step">
+        <h4>サンプルデータのご用意 <span class="who">くぅさま</span></h4>
+        <p>議事録テンプレート・店舗Excelの例など、ご無理のない範囲で「実物に近いダミー」をお送りいただけますと、より精度の高い提案書になります。</p>
+      </div>
+      <div class="step">
+        <h4>社内ご提案・ご相談 <span class="who">くぅさま</span></h4>
+        <p>提案書をもとに、人事部ミーティングで「AIでこんなことができるよ」と社内にお伝えいただく機会を持っていただく。</p>
+      </div>
+      <div class="step">
+        <h4>ご感想を伺う <span class="who">2人で</span></h4>
+        <p>社内の反応・反応されたいポイントをくぅさまから伺って、必要なら追加の検証・素材をお作りします。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 気づき ============================ -->
+  <section class="alt">
+    <h2><span class="small">SECTION 06</span>当日いただいた、大事な気づき</h2>
+    <p>テキストのヒアリングだけでは見えなかった、貴重な情報をいただきました。</p>
+
+    <div class="insight-grid">
+      <div class="insight">
+        <h4>💡 ご家族にも横展開ポテンシャルあり</h4>
+        <p>旦那さまが店舗の店長をなさっているとのこと。AIの導入が進めば、店舗側のオペレーションにも応用できる可能性があります。</p>
+      </div>
+      <div class="insight">
+        <h4>💡 制服 ↔ 給与の連動構造</h4>
+        <p>制服の費用が社員の給与から天引きされる仕組みとの連動があり、単なる在庫管理よりも一段複雑な構造であることが分かりました。</p>
+      </div>
+      <div class="insight">
+        <h4>💡 業務改善は「3領域」あり</h4>
+        <p>制服在庫管理だけでなく、議事録・シフト管理にもAI活用への興味があるとのこと。順次対応できる流れを設計させていただきます。</p>
+      </div>
+      <div class="insight">
+        <h4>💡 「自分一人での担当」というプレッシャー</h4>
+        <p>社内でAI担当が自分だけになる可能性へのご不安を伺いました。提案書では「どう周りを巻き込むか」の視点も入れさせていただきます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 関連リンク ============================ -->
+  <section>
+    <h2><span class="small">SECTION 07</span>関連リンク（このページの裏側）</h2>
+    <p>当日のお話の証跡や、おけもんカンパニーが作成中の資料へのリンクです。</p>
+
+    <div class="link-grid">
+      <a class="link-btn featured" href="https://app.circleback.ai/view/mone9006opb5nxl6su?tab=transcript" target="_blank" rel="noopener">
+        <div class="icon">🎧</div>
+        <span class="title">当日の音声・全文文字起こし</span>
+        <span class="desc">Circlebackで記録された当日の会話をそのままご覧いただけます（音声再生・全発言）</span>
+      </a>
+      <a class="link-btn" href="https://okemonogatari-hash.github.io/uniform-management-demo/" target="_blank" rel="noopener">
+        <div class="icon">📄</div>
+        <span class="title">AI自動化の提案書（公開版）</span>
+        <span class="desc">「制服在庫管理の自動化」のビフォーアフターを絵で見られる提案書。実物のスプシ埋め込みあり。</span>
+      </a>
+      <a class="link-btn" href="https://docs.google.com/spreadsheets/d/13whg_PM3ShaV4iSFJnw9_Z9xGQf7xGB_rwP8hzJHKF4" target="_blank" rel="noopener">
+        <div class="icon">📊</div>
+        <span class="title">サンプル：マスタースプシ</span>
+        <span class="desc">「集約された後の表」のイメージ。6店舗 × 10商品 = 60行のサンプルデータ入り。</span>
+      </a>
+      <a class="link-btn" href="https://app.circleback.ai/view/mone9006opb5nxl6su" target="_blank" rel="noopener">
+        <div class="icon">📝</div>
+        <span class="title">Circleback Notes（AI議事録）</span>
+        <span class="desc">CirclebackのAIが当日の会話を自動要約したNotes。Action Itemsもこちらで確認できます。</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================ 締め ============================ -->
+  <div class="closing">
+    <h2><span class="small">FROM US</span>くぅさまへ、感謝を込めて</h2>
+    <p style="margin-top: 18px;">
+      当日は1時間半以上、貴重なお時間をいただきありがとうございました🌷<br>
+      お話の中で見えた「複雑なフロー」「お一人で抱えられているもの」は、<br>
+      AIで解決できる部分が確実にあると感じています。<br>
+      次のミーティングまでに、提案書を心を込めてご用意してお持ちします。
+    </p>
+    <div class="signature">
+      おけもんカンパニー<br>
+      ご提出：2026年5月1日（金）
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="private-tag">🔒 PRIVATE NOTES</span><br>
+    このページはくぅさま向けの振り返り資料です。<br>
+    URLを知っている方のみアクセスでき、検索エンジンには表示されません。
+  </div>
+
+</div>
+</body>
+</html>
